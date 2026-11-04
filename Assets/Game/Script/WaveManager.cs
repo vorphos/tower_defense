@@ -27,7 +27,7 @@ public class Wave
 public class WaveManager : MonoBehaviour
 {
    [SerializeField] private GameManager gameManager;
-   
+   [SerializeField] private Waypoints waypoints;
    
    [SerializeField] private Wave[] _waves;
    [SerializeField] private float _timeBetweenWaves = 10f;
@@ -111,6 +111,11 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnEnemy(GameObject prefab)
     {
-        
+        Transform start = waypoints.GetPoint(0);
+        GameObject enemyObj = Instantiate(prefab, start.position, start.rotation);
+        Enemy enemy = enemyObj.GetComponent<Enemy>();
+        enemy.Init(gameManager, this, waypoints);
+
+        _enemiesAlive++;
     }
 }
